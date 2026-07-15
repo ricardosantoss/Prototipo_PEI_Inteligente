@@ -626,6 +626,7 @@ function renderPei() {
           <button class="button button-primary" type="submit">Salvar PEI</button>
           <button class="button button-ghost" type="button" data-export-pei>Exportar texto</button>
         </div>
+        <p class="generation-status" data-pei-status aria-live="polite">Ao gerar, este aviso confirma se a resposta veio do MariTalk ou da simulacao local.</p>
       </form>
     </section>
     ${renderPeiHistory(state.selectedStudentId)}
@@ -726,6 +727,7 @@ function renderActivities() {
           <button class="button button-primary" type="submit">Salvar atividades</button>
           <button class="button button-ghost" type="button" data-export-activities>Exportar texto</button>
         </div>
+        <p class="generation-status" data-activities-status aria-live="polite">Ao gerar, este aviso confirma se a resposta veio do MariTalk ou da simulacao local.</p>
       </form>
     </section>
     ${renderActivityHistory(state.selectedStudentId)}
@@ -884,7 +886,14 @@ async function requestMaritalk(type, payload) {
   });
 
   if (!response.ok) {
-    throw new Error("MariTalk indisponivel no ambiente atual.");
+    let message = "MariTalk indisponivel no ambiente atual.";
+    try {
+      const errorData = await response.json();
+      message = errorData?.error || errorData?.detail || message;
+    } catch {
+      message = response.status === 404 ? "Rota /api/maritalk nao encontrada no deploy." : message;
+    }
+    throw new Error(message);
   }
 
   const data = await response.json();
@@ -893,6 +902,15 @@ async function requestMaritalk(type, payload) {
   }
 
   return data.text;
+}
+
+function setGenerationStatus(selector, message, variant) {
+  const element = $(selector);
+  if (!element) return;
+
+  element.textContent = message;
+  element.classList.toggle("is-success", variant === "success");
+  element.classList.toggle("is-warning", variant === "warning");
 }
 
 function setButtonBusy(button, busy, busyLabel) {
@@ -1037,6 +1055,7 @@ function bindViewEvents() {
       const fallback = generatePei(student, values.subject, values.contents);
       let generated = fallback;
       setButtonBusy(generateButton, true, "Gerando...");
+      setGenerationStatus("[data-pei-status]", "Tentando gerar com MariTalk/Sabia-3...", "");
 
       try {
         const response = await requestMaritalk("pei", {
@@ -1046,8 +1065,14 @@ function bindViewEvents() {
           contents: values.contents
         });
         generated = parsePeiResponse(response, fallback);
-      } catch {
+        setGenerationStatus("[data-pei-status]", "Gerado com MariTalk/Sabia-3. A API foi usada neste clique.", "success");
+      } catch (error) {
         generated = fallback;
+        setGenerationStatus(
+          "[data-pei-status]",
+          `Nao foi possivel usar MariTalk agora. O prototipo preencheu uma simulacao local. Motivo: ${error.message}`,
+          "warning"
+        );
       } finally {
         setButtonBusy(generateButton, false);
       }
@@ -1093,6 +1118,7 @@ function bindViewEvents() {
       const fallback = generateActivities(student, values.subject, values.focus, values.contents);
       let output = fallback;
       setButtonBusy(generateButton, true, "Gerando...");
+      setGenerationStatus("[data-activities-status]", "Tentando gerar com MariTalk/Sabia-3...", "");
 
       try {
         const response = await requestMaritalk("activities", {
@@ -1103,8 +1129,14 @@ function bindViewEvents() {
           contents: values.contents
         });
         output = normalizeActivitiesResponse(response, fallback);
-      } catch {
+        setGenerationStatus("[data-activities-status]", "Gerado com MariTalk/Sabia-3. A API foi usada neste clique.", "success");
+      } catch (error) {
         output = fallback;
+        setGenerationStatus(
+          "[data-activities-status]",
+          `Nao foi possivel usar MariTalk agora. O prototipo preencheu uma simulacao local. Motivo: ${error.message}`,
+          "warning"
+        );
       } finally {
         setButtonBusy(generateButton, false);
       }
