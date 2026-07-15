@@ -105,7 +105,7 @@ module.exports = async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: process.env.MARITALK_MODEL || "sabia-4",
+        model: process.env.MARITALK_MODEL || "sabia-3",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.2,
         max_tokens: body.type === "activities" ? 5000 : 4000
@@ -128,3 +128,4 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: "Erro ao gerar resposta com MariTalk." });
   }
 };
+
