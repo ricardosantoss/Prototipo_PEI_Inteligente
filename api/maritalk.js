@@ -1,38 +1,38 @@
 function studentContext(student = {}) {
   return [
-    `Nome usado no prototipo: ${student.name || "Estudante"}`,
-    `Idade: ${student.age || "nao informada"}`,
-    `Curso/turma: ${student.course || "nao informado"} - ${student.group || "nao informada"}`,
-    `Diagnostico/contexto pedagogico: ${student.diagnosis || "nao informado"}`,
-    `Historico escolar: ${student.history || "nao informado"}`,
-    `Necessidades educacionais: ${student.needs || "nao informadas"}`,
-    `Habilidades e interesses: ${student.skills || "nao informados"}`,
-    `Dificuldades observadas: ${student.difficulties || "nao informadas"}`,
-    `Adaptacoes recomendadas: ${student.accommodations || "nao informadas"}`,
-    `Observacoes: ${student.notes || "sem observacoes"}`
+    `Nome usado no protótipo: ${student.name || "Estudante"}`,
+    `Idade: ${student.age || "não informada"}`,
+    `Curso/turma: ${student.course || "não informado"} - ${student.group || "não informada"}`,
+    `Diagnóstico/contexto pedagógico: ${student.diagnosis || "não informado"}`,
+    `Histórico escolar: ${student.history || "não informado"}`,
+    `Necessidades educacionais: ${student.needs || "não informadas"}`,
+    `Habilidades e interesses: ${student.skills || "não informados"}`,
+    `Dificuldades observadas: ${student.difficulties || "não informadas"}`,
+    `Adaptações recomendadas: ${student.accommodations || "não informadas"}`,
+    `Observações: ${student.notes || "sem observações"}`
   ].join("\n");
 }
 
 function buildPeiPrompt(body = {}) {
   return `
-Voce e um assistente pedagogico especializado em Educacao Inclusiva e deve apoiar um professor na elaboracao de um PEI.
+Você é um assistente pedagógico especializado em Educação Inclusiva e deve apoiar um professor na elaboração de um PEI.
 
-Use linguagem profissional, objetiva, respeitosa e aplicavel em escola publica brasileira.
-Nao invente diagnosticos clinicos. Transforme as informacoes do estudante em orientacoes pedagogicas praticas.
+Use linguagem profissional, objetiva, respeitosa e aplicável em escola pública brasileira.
+Não invente diagnósticos clínicos. Transforme as informações do estudante em orientações pedagógicas práticas.
 Preserve exatamente os quatro blocos abaixo e responda somente com esses blocos:
 
-07 - Objetivos Especificos:
+07 - Objetivos Específicos:
 09 - Metodologia:
-10 - Avaliacao:
+10 - Avaliação:
 11 - Resultados Esperados:
 
 Dados do estudante:
 ${studentContext(body.student)}
 
-Professor(a): ${body.teacherName || "nao informado"}
-Componente curricular: ${body.subject || "nao informado"}
+Professor(a): ${body.teacherName || "não informado"}
+Componente curricular: ${body.subject || "não informado"}
 08 - Conteudos Programaticos:
-${body.contents || "nao informado"}
+${body.contents || "não informado"}
 
 Regras:
 - Em objetivos, escreva de 3 a 5 objetivos mensuraveis e realistas.
@@ -44,22 +44,22 @@ Regras:
 
 function buildActivitiesPrompt(body = {}) {
   return `
-Voce e um assistente pedagogico especializado em atividades adaptadas para Educacao Inclusiva.
+Você é um assistente pedagógico especializado em atividades adaptadas para Educação Inclusiva.
 
 Crie uma sequencia de atividades adaptadas com base no perfil do estudante.
 Use linguagem profissional, objetiva e diretamente aplicavel pelo professor.
 Responda somente com o bloco abaixo:
 
-12 - Sugestoes de Atividades:
+12 - Sugestões de Atividades:
 
 Dados do estudante:
 ${studentContext(body.student)}
 
-Professor(a): ${body.teacherName || "nao informado"}
-Componente curricular: ${body.subject || "nao informado"}
-Foco pedagogico: ${body.focus || "nao informado"}
+Professor(a): ${body.teacherName || "não informado"}
+Componente curricular: ${body.subject || "não informado"}
+Foco pedagógico: ${body.focus || "não informado"}
 Conteudos base:
-${body.contents || "nao informado"}
+${body.contents || "não informado"}
 
 Regras:
 - Crie de 6 a 10 atividades.
@@ -84,13 +84,13 @@ async function readBody(req) {
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
-    return res.status(405).json({ error: "Metodo nao permitido" });
+    return res.status(405).json({ error: "Método não permitido" });
   }
 
   const apiKey = process.env.MARITALK_API_KEY;
   if (!apiKey) {
     return res.status(503).json({
-      error: "MARITALK_API_KEY nao configurada. O prototipo usara a geracao local de demonstracao."
+      error: "MARITALK_API_KEY não configurada. O protótipo usará a geração local de demonstração."
     });
   }
 
