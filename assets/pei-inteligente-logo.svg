@@ -1,0 +1,12 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">PEI Inteligente</title>
+  <desc id="desc">Marca circular com trilhas de aprendizagem e destaque para inclusão educacional.</desc>
+  <rect width="512" height="512" rx="124" fill="#F7FBF9"/>
+  <circle cx="256" cy="256" r="178" fill="#FFFFFF" stroke="#D7E5DE" stroke-width="12"/>
+  <path d="M256 114C177.575 114 114 177.575 114 256C114 334.425 177.575 398 256 398C320.101 398 374.266 355.544 391.907 297.213" stroke="#04756F" stroke-width="34" stroke-linecap="round"/>
+  <path d="M256 178C212.922 178 178 212.922 178 256C178 299.078 212.922 334 256 334C287.688 334 314.954 315.094 327.174 287.95" stroke="#5EA66A" stroke-width="30" stroke-linecap="round"/>
+  <path d="M256 235C244.402 235 235 244.402 235 256C235 267.598 244.402 277 256 277H332" stroke="#10201D" stroke-width="42" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M332 169C364.033 190.758 385 226.889 385 268" stroke="#F1C84C" stroke-width="28" stroke-linecap="round"/>
+  <path d="M321 353C361 347 394 322 410 287C375 290 344 313 321 353Z" fill="#5EA66A"/>
+  <circle cx="256" cy="256" r="24" fill="#04756F"/>
+</svg>
