@@ -326,6 +326,43 @@ p {
   box-shadow: 0 10px 26px rgba(10, 35, 32, 0.05);
 }
 
+.team-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.team-links a {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 14px;
+  border: 1px solid rgba(216, 228, 222, 0.92);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 8px 20px rgba(10, 35, 32, 0.05);
+  text-decoration: none;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.team-links a:hover,
+.team-links a:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(10, 35, 32, 0.1);
+}
+
+.team-links strong {
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.team-links span {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
 .login-panel {
   align-self: center;
   width: 100%;
