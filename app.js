@@ -208,7 +208,7 @@ function renderNotice() {
   return `
     <div class="notice">
       <strong>Protótipo público e demonstrativo</strong>
-      <span>Use apenas dados fictícios ou anonimizados. Os cadastros ficam salvos neste navegador. A geração tenta usar MariTalk/Sabia-3 quando a variável segura do Vercel estiver configurada; caso contrário, usa resposta simulada.</span>
+      <span>Use apenas dados fictícios ou anonimizados. Os cadastros ficam salvos neste navegador.</span>
     </div>
   `;
 }
