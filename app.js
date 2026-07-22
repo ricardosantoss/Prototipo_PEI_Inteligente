@@ -1065,7 +1065,7 @@ function bindViewEvents() {
           contents: values.contents
         });
         generated = parsePeiResponse(response, fallback);
-        setGenerationStatus("[data-pei-status]", "Gerado com MariTalk/Sabia-3. A API foi usada neste clique.", "success");
+        setGenerationStatus("[data-pei-status]", "Gerado com o modelo Sabiázinho-4. A API foi usada neste clique.", "success");
       } catch (error) {
         generated = fallback;
         setGenerationStatus(
