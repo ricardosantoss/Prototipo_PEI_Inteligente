@@ -605,28 +605,41 @@ function renderPei() {
           <h2>Plano Educacional Individualizado</h2>
           <p>Informe o componente e os conteúdos, gere uma primeira versão e revise todos os campos antes de salvar.</p>
         </div>
-        <span class="mini-tag gold">Campos 07, 09, 10 e 11</span>
       </div>
       <div class="model-box">
         <strong>Apoio à elaboração:</strong>
         a sugestão considera necessidades, habilidades, dificuldades, adaptações e conteúdos programáticos. A revisão e a decisão final permanecem com o profissional responsável.
       </div>
       <form class="data-form" id="pei-form">
-        <div class="field-grid">
-          <label>Docente<input name="teacherName" value="${escapeHtml(getTeacherName(state.teacherId))}" readonly /></label>
-          <label>Componente curricular<input name="subject" value="${escapeHtml(latest.subject || "Matemática")}" required /></label>
-          <label class="wide">(08) Conteúdos programáticos<textarea name="contents" required>${escapeHtml(latest.contents || "Funções afins: interpretação de gráficos, relação entre variáveis e resolução de problemas contextualizados.")}</textarea></label>
-          <label>(07) Objetivos específicos<textarea name="objectives">${escapeHtml(latest.objectives || "")}</textarea></label>
-          <label>(09) Metodologia<textarea name="methodology">${escapeHtml(latest.methodology || "")}</textarea></label>
-          <label>(10) Avaliação<textarea name="evaluation">${escapeHtml(latest.evaluation || "")}</textarea></label>
-          <label>(11) Resultados esperados<textarea name="results">${escapeHtml(latest.results || "")}</textarea></label>
+        <div class="form-stage">
+          <div class="form-stage-heading">
+            <span>1</span>
+            <div><strong>Informações da proposta</strong><small>Dados definidos pelo professor antes da geração.</small></div>
+          </div>
+          <div class="field-grid">
+            <label>Docente<input name="teacherName" value="${escapeHtml(getTeacherName(state.teacherId))}" readonly /></label>
+            <label>Componente curricular<input name="subject" value="${escapeHtml(latest.subject || "Matemática")}" required /></label>
+            <label class="wide">Conteúdos programáticos<textarea name="contents" required>${escapeHtml(latest.contents || "Funções afins: interpretação de gráficos, relação entre variáveis e resolução de problemas contextualizados.")}</textarea></label>
+          </div>
         </div>
-        <div class="split-actions">
+        <div class="split-actions form-actions">
           <button class="button button-secondary" type="button" data-generate-pei>Gerar sugestão</button>
           <button class="button button-primary" type="submit">Salvar PEI</button>
-          <button class="button button-ghost" type="button" data-export-pei>Exportar texto</button>
+          <button class="button button-ghost" type="button" data-pdf-pei>Gerar PDF</button>
         </div>
         <p class="generation-status" data-pei-status aria-live="polite">A geração pode usar o serviço de IA configurado ou o modo demonstrativo local.</p>
+        <div class="form-stage generated-stage">
+          <div class="form-stage-heading">
+            <span>2</span>
+            <div><strong>Conteúdo sugerido</strong><small>Revise e edite cada campo antes de salvar ou gerar o PDF.</small></div>
+          </div>
+          <div class="field-grid">
+            <label>Objetivos específicos<textarea name="objectives">${escapeHtml(latest.objectives || "")}</textarea></label>
+            <label>Metodologia<textarea name="methodology">${escapeHtml(latest.methodology || "")}</textarea></label>
+            <label>Avaliação<textarea name="evaluation">${escapeHtml(latest.evaluation || "")}</textarea></label>
+            <label>Resultados esperados<textarea name="results">${escapeHtml(latest.results || "")}</textarea></label>
+          </div>
+        </div>
       </form>
     </section>
     ${renderPeiHistory(state.selectedStudentId)}
@@ -712,22 +725,35 @@ function renderActivities() {
           <h2>Gerador de atividades</h2>
           <p>Gere uma sequência inicial, revise as adaptações e salve a versão adequada para o estudante.</p>
         </div>
-        <span class="mini-tag blue">Bloco 12</span>
       </div>
       <form class="data-form" id="activity-form">
-        <div class="field-grid">
-          <label>Docente<input name="teacherName" value="${escapeHtml(getTeacherName(state.teacherId))}" readonly /></label>
-          <label>Componente curricular<input name="subject" value="${escapeHtml(latest.subject || "Matemática")}" required /></label>
-          <label>Foco da aula<input name="focus" value="${escapeHtml(latest.focus || "Leitura de gráficos e resolução de situações-problema")}" required /></label>
-          <label class="wide">(08) Conteúdos base<textarea name="contents" required>${escapeHtml(latest.contents || "Funções afins, interpretação de gráficos, padrões de crescimento e aplicações no cotidiano.")}</textarea></label>
-          <label class="wide">(12) Sugestões de atividades<textarea class="generated-output" name="output">${escapeHtml(latest.output || "")}</textarea></label>
+        <div class="form-stage">
+          <div class="form-stage-heading">
+            <span>1</span>
+            <div><strong>Informações da atividade</strong><small>Dados definidos pelo professor antes da geração.</small></div>
+          </div>
+          <div class="field-grid">
+            <label>Docente<input name="teacherName" value="${escapeHtml(getTeacherName(state.teacherId))}" readonly /></label>
+            <label>Componente curricular<input name="subject" value="${escapeHtml(latest.subject || "Matemática")}" required /></label>
+            <label>Foco da aula<input name="focus" value="${escapeHtml(latest.focus || "Leitura de gráficos e resolução de situações-problema")}" required /></label>
+            <label class="wide">Conteúdos base<textarea name="contents" required>${escapeHtml(latest.contents || "Funções afins, interpretação de gráficos, padrões de crescimento e aplicações no cotidiano.")}</textarea></label>
+          </div>
         </div>
-        <div class="split-actions">
+        <div class="split-actions form-actions">
           <button class="button button-secondary" type="button" data-generate-activities>Gerar sugestões</button>
           <button class="button button-primary" type="submit">Salvar atividades</button>
-          <button class="button button-ghost" type="button" data-export-activities>Exportar texto</button>
+          <button class="button button-ghost" type="button" data-pdf-activities>Gerar PDF</button>
         </div>
         <p class="generation-status" data-activities-status aria-live="polite">A geração pode usar o serviço de IA configurado ou o modo demonstrativo local.</p>
+        <div class="form-stage generated-stage">
+          <div class="form-stage-heading">
+            <span>2</span>
+            <div><strong>Atividades sugeridas</strong><small>Revise e edite o conteúdo antes de salvar ou gerar o PDF.</small></div>
+          </div>
+          <div class="field-grid">
+            <label class="wide">Sugestões de atividades<textarea class="generated-output" name="output">${escapeHtml(latest.output || "")}</textarea></label>
+          </div>
+        </div>
       </form>
     </section>
     ${renderActivityHistory(state.selectedStudentId)}
@@ -931,16 +957,147 @@ function currentDate() {
   return new Intl.DateTimeFormat("pt-BR").format(new Date());
 }
 
-function downloadText(filename, content) {
-  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
+function printValue(value, fallback = "Não informado") {
+  const text = String(value || fallback).trim();
+  return escapeHtml(text || fallback).replace(/\r?\n/g, "<br>");
+}
+
+function cleanGeneratedHeading(value) {
+  return String(value || "")
+    .replace(/^\s*(?:0?[7-9]|1[0-2])\s*-\s*[^\n:]+:?\s*/i, "")
+    .trim();
+}
+
+function openPrintableDocument(type, student, values) {
+  const isPei = type === "pei";
+  const documentName = isPei ? "Plano Educacional Individualizado" : "Atividades Adaptadas";
+  const logoUrl = new URL("assets/cepi-ismael.webp", window.location.href).href;
+  const printWindow = window.open("", "_blank", "width=980,height=820");
+
+  if (!printWindow) {
+    window.alert("Não foi possível abrir o PDF. Autorize janelas pop-up para este site e tente novamente.");
+    return;
+  }
+
+  const sections = isPei
+    ? [
+        [null, "Conteúdos programáticos", values.contents],
+        [null, "Objetivos específicos", cleanGeneratedHeading(values.objectives)],
+        [null, "Metodologia", cleanGeneratedHeading(values.methodology)],
+        [null, "Avaliação", cleanGeneratedHeading(values.evaluation)],
+        [null, "Resultados esperados", cleanGeneratedHeading(values.results)]
+      ]
+    : [
+        ["08", "Conteúdos base", values.contents],
+        ["12", "Sugestões de atividades", cleanGeneratedHeading(values.output)]
+      ];
+
+  const sectionMarkup = sections
+    .map(
+      ([number, title, content]) => `
+        <section class="document-section${number ? "" : " no-number"}">
+          ${number ? `<div class="section-number">${number}</div>` : ""}
+          <div>
+            <h2>${title}</h2>
+            <div class="section-content">${printValue(content)}</div>
+          </div>
+        </section>
+      `
+    )
+    .join("");
+
+  const focusMarkup = isPei
+    ? ""
+    : `<div><span>Foco da aula</span><strong>${printValue(values.focus)}</strong></div>`;
+
+  printWindow.document.open();
+  printWindow.document.write(`<!doctype html>
+    <html lang="pt-BR">
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>${documentName} - ${escapeHtml(student.name)}</title>
+        <style>
+          @page { size: A4; margin: 16mm 15mm 19mm; }
+          * { box-sizing: border-box; }
+          body { margin: 0; color: #171918; background: #fff; font-family: Arial, Helvetica, sans-serif; font-size: 10.5pt; line-height: 1.52; }
+          .print-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; max-width: 210mm; margin: 0 auto; padding: 12px 18px; background: #0f2926; color: #fff; font-size: 13px; }
+          .print-toolbar button { min-height: 36px; padding: 0 15px; border: 0; border-radius: 999px; background: #f2c84b; color: #171918; font-weight: 700; cursor: pointer; }
+          .document { width: 100%; max-width: 180mm; margin: 0 auto; padding: 18mm 0 10mm; }
+          .document-header { display: grid; grid-template-columns: 104px 1fr auto; align-items: center; gap: 16px; padding-bottom: 16px; border-bottom: 3px solid #08766f; }
+          .cepi-logo { position: relative; width: 96px; height: 80px; overflow: hidden; }
+          .cepi-logo img { position: absolute; top: -6px; left: 50%; width: 152px; max-width: none; height: auto; transform: translateX(-50%); }
+          .school-name small, .school-name strong { display: block; }
+          .school-name small { color: #08766f; font-size: 8pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+          .school-name strong { margin-top: 5px; color: #0f2926; font-size: 13pt; line-height: 1.18; }
+          .document-mark { padding: 7px 10px; border-radius: 999px; background: #e9f4ef; color: #075d58; font-size: 8pt; font-weight: 700; text-transform: uppercase; }
+          .title-block { padding: 24px 0 18px; }
+          .title-block span { color: #08766f; font-size: 8pt; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+          .title-block h1 { margin: 7px 0 0; color: #171918; font-size: 24pt; line-height: 1.08; letter-spacing: -0.025em; }
+          .title-block p { margin: 8px 0 0; color: #68726d; }
+          .meta-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin-top: 5px; }
+          .meta-grid > div { padding: 11px 13px; border: 1px solid #e2e8e5; border-radius: 10px; background: #f7f9f8; }
+          .meta-grid span, .meta-grid strong { display: block; }
+          .meta-grid span { color: #68726d; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+          .meta-grid strong { margin-top: 3px; color: #253a36; font-size: 10pt; }
+          .context-box { margin-top: 18px; padding: 15px; border-left: 4px solid #f2c84b; border-radius: 0 12px 12px 0; background: #fff8df; }
+          .context-box h2 { margin: 0 0 10px; color: #0f2926; font-size: 12pt; }
+          .context-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 16px; }
+          .context-grid div { color: #39403d; font-size: 9pt; }
+          .context-grid b { color: #171918; }
+          .document-section { display: grid; grid-template-columns: 34px 1fr; gap: 12px; margin-top: 18px; padding-top: 16px; border-top: 1px solid #dfe7e3; break-inside: avoid; page-break-inside: avoid; }
+          .document-section.no-number { grid-template-columns: 1fr; }
+          .section-number { display: grid; place-items: center; width: 31px; height: 31px; border-radius: 50%; background: #08766f; color: #fff; font-size: 9pt; font-weight: 700; }
+          .document-section h2 { margin: 3px 0 8px; color: #0f2926; font-size: 13pt; }
+          .section-content { color: #39403d; white-space: normal; }
+          .document-footer { margin-top: 28px; padding-top: 12px; border-top: 1px solid #dfe7e3; color: #68726d; font-size: 7.5pt; text-align: center; }
+          @media print {
+            .print-toolbar { display: none !important; }
+            .document { max-width: none; padding: 0; }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="print-toolbar"><span>Revise o documento e escolha <strong>Salvar como PDF</strong> na janela de impressão.</span><button type="button" onclick="window.print()">Imprimir novamente</button></div>
+        <main class="document">
+          <header class="document-header">
+            <div class="cepi-logo"><img src="${logoUrl}" alt="Logo do CEPI Ismael Silva de Jesus" /></div>
+            <div class="school-name"><small>Escola parceira</small><strong>CEPI Ismael Silva de Jesus</strong></div>
+            <div class="document-mark">PEI Inteligente</div>
+          </header>
+          <section class="title-block">
+            <span>Documento pedagógico</span>
+            <h1>${documentName}</h1>
+            <p>Documento elaborado no PEI Inteligente e revisado pelo profissional responsável.</p>
+          </section>
+          <section class="meta-grid">
+            <div><span>Estudante</span><strong>${printValue(student.name)}</strong></div>
+            <div><span>Curso e turma</span><strong>${printValue(`${student.course} - ${student.group}`)}</strong></div>
+            <div><span>Docente</span><strong>${printValue(values.teacherName)}</strong></div>
+            <div><span>Componente curricular</span><strong>${printValue(values.subject)}</strong></div>
+            ${focusMarkup}
+            <div><span>Data de emissão</span><strong>${currentDate()}</strong></div>
+          </section>
+          <section class="context-box">
+            <h2>Contexto pedagógico do estudante</h2>
+            <div class="context-grid">
+              <div><b>Necessidades:</b> ${printValue(student.needs)}</div>
+              <div><b>Habilidades:</b> ${printValue(student.skills)}</div>
+              <div><b>Dificuldades:</b> ${printValue(student.difficulties)}</div>
+              <div><b>Adaptações:</b> ${printValue(student.accommodations)}</div>
+            </div>
+          </section>
+          ${sectionMarkup}
+          <footer class="document-footer">CEPI Ismael Silva de Jesus - PEI Inteligente - Uso pedagógico</footer>
+        </main>
+        <script>
+          window.addEventListener("load", function () {
+            window.setTimeout(function () { window.print(); }, 450);
+          });
+        <\/script>
+      </body>
+    </html>`);
+  printWindow.document.close();
 }
 
 function getFormValues(form) {
@@ -1048,7 +1205,7 @@ function bindViewEvents() {
   const peiForm = $("#pei-form");
   if (peiForm) {
     const generateButton = $("[data-generate-pei]");
-    const exportButton = $("[data-export-pei]");
+    const pdfButton = $("[data-pdf-pei]");
     generateButton.addEventListener("click", async () => {
       const values = getFormValues(peiForm);
       const student = getStudent(state.selectedStudentId);
@@ -1082,10 +1239,10 @@ function bindViewEvents() {
       peiForm.elements.evaluation.value = generated.evaluation;
       peiForm.elements.results.value = generated.results;
     });
-    exportButton.addEventListener("click", () => {
+    pdfButton.addEventListener("click", () => {
       const values = getFormValues(peiForm);
       const student = getStudent(state.selectedStudentId);
-      downloadText(`PEI_${student.name.replaceAll(" ", "_")}.txt`, buildPeiText(student, values));
+      openPrintableDocument("pei", student, values);
     });
     peiForm.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -1111,7 +1268,7 @@ function bindViewEvents() {
   const activityForm = $("#activity-form");
   if (activityForm) {
     const generateButton = $("[data-generate-activities]");
-    const exportButton = $("[data-export-activities]");
+    const pdfButton = $("[data-pdf-activities]");
     generateButton.addEventListener("click", async () => {
       const values = getFormValues(activityForm);
       const student = getStudent(state.selectedStudentId);
@@ -1143,10 +1300,10 @@ function bindViewEvents() {
 
       activityForm.elements.output.value = output;
     });
-    exportButton.addEventListener("click", () => {
+    pdfButton.addEventListener("click", () => {
       const values = getFormValues(activityForm);
       const student = getStudent(state.selectedStudentId);
-      downloadText(`Atividades_${student.name.replaceAll(" ", "_")}.txt`, buildActivityText(student, values));
+      openPrintableDocument("activities", student, values);
     });
     activityForm.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -1166,63 +1323,6 @@ function bindViewEvents() {
       render();
     });
   }
-}
-
-function buildPeiText(student, values) {
-  return `PEI Inteligente - Protótipo
-
-Estudante: ${student.name}
-Curso/Turma: ${student.course} - ${student.group}
-Docente: ${values.teacherName}
-Componente curricular: ${values.subject}
-
-Diagnóstico/contexto:
-${student.diagnosis}
-
-Necessidades:
-${student.needs}
-
-Habilidades:
-${student.skills}
-
-Dificuldades:
-${student.difficulties}
-
-Adaptações:
-${student.accommodations}
-
-(08) Conteúdos Programáticos:
-${values.contents}
-
-${values.objectives}
-
-${values.methodology}
-
-${values.evaluation}
-
-${values.results}
-`;
-}
-
-function buildActivityText(student, values) {
-  return `PEI Inteligente - Protótipo de atividades adaptadas
-
-Estudante: ${student.name}
-Docente: ${values.teacherName}
-Componente curricular: ${values.subject}
-Foco: ${values.focus}
-
-Contexto do estudante:
-Necessidades: ${student.needs}
-Habilidades: ${student.skills}
-Dificuldades: ${student.difficulties}
-Adaptações: ${student.accommodations}
-
-(08) Conteúdos base:
-${values.contents}
-
-${values.output}
-`;
 }
 
 function bindGlobalEvents() {

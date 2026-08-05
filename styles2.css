@@ -1016,6 +1016,67 @@ input[readonly] {
   grid-column: 1 / -1;
 }
 
+.form-stage {
+  display: grid;
+  gap: 19px;
+  padding: 21px;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: var(--paper-soft);
+}
+
+.form-stage-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.form-stage-heading > span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--brand-deep);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.form-stage-heading strong,
+.form-stage-heading small {
+  display: block;
+}
+
+.form-stage-heading strong {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+}
+
+.form-stage-heading small {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.generated-stage {
+  margin-top: 5px;
+  background: linear-gradient(180deg, #fff 0%, #f7fbf9 100%);
+}
+
+.generated-stage .form-stage-heading > span {
+  background: var(--brand);
+}
+
+.form-actions {
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: #fff;
+}
+
 .data-form > .button {
   justify-self: start;
 }
@@ -1370,6 +1431,10 @@ input[readonly] {
 
   .panel {
     padding: 20px 16px;
+  }
+
+  .form-stage {
+    padding: 17px 14px;
   }
 
   .panel-title {
