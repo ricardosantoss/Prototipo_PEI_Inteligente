@@ -42,7 +42,7 @@ Se `MARITALK_API_KEY` nao estiver configurada, o prototipo continua funcionando 
 ## Publicar no GitHub e Vercel
 
 1. Crie um repositorio no GitHub.
-2. Envie todos os arquivos desta pasta, incluindo `assets`, `api`, `.env.example`, `.gitignore`, `index.html`, `styles.css` e `app.js`.
+2. Envie todos os arquivos desta pasta, incluindo `assets`, `api`, `index.html`, `styles2.css`, `app.js` e `vercel.json`.
 3. No Vercel, clique em **Add New Project**.
 4. Importe o repositorio.
 5. Mantenha as configuracoes padrao e publique.

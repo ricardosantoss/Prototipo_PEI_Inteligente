@@ -190,10 +190,10 @@ function render() {
 
 function renderShell() {
   const isAdmin = state.role === "admin";
-  $("#session-label").textContent = isAdmin ? "Administrador em teste" : `${getTeacherName(state.teacherId)} - professor em teste`;
+  $("#session-label").textContent = isAdmin ? "Perfil administrador" : `${getTeacherName(state.teacherId)} · Professor`;
   $("#module-title").textContent = isAdmin ? "Administrador" : "Professor";
   $("#module-description").textContent = isAdmin
-    ? "Gestão de alunos, professores e vínculos."
+    ? "Direção, coordenação e professor de AEE."
     : "Criação de PEI e atividades adaptadas.";
 
   $("#app-nav").innerHTML = navItems[state.role]
@@ -207,8 +207,8 @@ function renderShell() {
 function renderNotice() {
   return `
     <div class="notice">
-      <strong>Protótipo público e demonstrativo</strong>
-      <span>Use apenas dados fictícios ou anonimizados. Os cadastros ficam salvos neste navegador.</span>
+      <strong>Ambiente de demonstração</strong>
+      <span>Use apenas dados fictícios ou anonimizados. As informações ficam salvas somente neste navegador.</span>
     </div>
   `;
 }
@@ -223,7 +223,7 @@ function renderAdminDashboard() {
       <div>
         <p class="section-kicker">Painel administrador</p>
         <h1>Visão geral da inclusão.</h1>
-        <p>Acompanhe alunos cadastrados, professores vinculados e documentos produzidos no protótipo.</p>
+        <p>Acompanhe estudantes cadastrados, professores vinculados e registros pedagógicos em um só lugar.</p>
       </div>
       <div class="actions-row">
         <button class="button button-secondary" type="button" data-view-shortcut="students">Cadastrar aluno</button>
@@ -231,11 +231,11 @@ function renderAdminDashboard() {
       </div>
     </div>
     ${renderNotice()}
-    <section class="grid three">
+    <section class="grid four">
       <article class="stat-card"><span>Alunos da inclusão</span><strong>${data.students.length}</strong><p>Inclui o aluno fictício inicial.</p></article>
       <article class="stat-card"><span>Professores</span><strong>${data.teachers.length}</strong><p>Docentes disponíveis para vínculo.</p></article>
       <article class="stat-card"><span>Alunos vinculados</span><strong>${linked}</strong><p>Com ao menos um professor associado.</p></article>
-      <article class="stat-card"><span>Registros pedagógicos</span><strong>${peis + activities}</strong><p>PEIs e atividades salvos no protótipo.</p></article>
+      <article class="stat-card"><span>Registros pedagógicos</span><strong>${peis + activities}</strong><p>PEIs e atividades salvos neste ambiente.</p></article>
     </section>
     <section class="panel">
       <div class="panel-title">
@@ -372,7 +372,7 @@ function renderTeachers() {
       <div class="panel-title">
         <div>
           <h2>Professores cadastrados</h2>
-          <p>Resumo dos docentes disponíveis no protótipo.</p>
+          <p>Resumo dos docentes disponíveis para acompanhamento.</p>
         </div>
       </div>
       <div class="grid two">
@@ -471,7 +471,7 @@ function renderTeacherHome() {
         <p>Veja os alunos vinculados a este professor e acesse rapidamente os fluxos de PEI e atividades adaptadas.</p>
       </div>
       <div class="actions-row">
-        <label>Docente em teste
+        <label>Docente selecionado
           <select data-change-teacher>
             ${data.teachers.map((teacher) => `<option value="${teacher.id}" ${teacher.id === state.teacherId ? "selected" : ""}>${escapeHtml(teacher.name)}</option>`).join("")}
           </select>
@@ -481,7 +481,7 @@ function renderTeacherHome() {
     ${renderNotice()}
     <section class="grid three">
       <article class="stat-card"><span>Alunos vinculados</span><strong>${students.length}</strong><p>Disponíveis para este professor.</p></article>
-      <article class="stat-card"><span>PEIs salvos</span><strong>${data.peis.filter((pei) => students.some((student) => student.id === pei.studentId)).length}</strong><p>Registros feitos no protótipo.</p></article>
+      <article class="stat-card"><span>PEIs salvos</span><strong>${data.peis.filter((pei) => students.some((student) => student.id === pei.studentId)).length}</strong><p>Registros disponíveis neste ambiente.</p></article>
       <article class="stat-card"><span>Atividades</span><strong>${data.activities.filter((activity) => students.some((student) => student.id === activity.studentId)).length}</strong><p>Sequências adaptadas salvas.</p></article>
     </section>
     <section class="panel">
@@ -585,7 +585,7 @@ function renderPei() {
       <div>
         <p class="section-kicker">Professor</p>
         <h1>Criar PEI do aluno.</h1>
-        <p>Fluxo inspirado no modelo MariTalk/Sabia-3 do arquivo enviado, com campos editáveis e fallback simulado.</p>
+        <p>Use o contexto pedagógico para elaborar objetivos, estratégias, avaliação e resultados esperados.</p>
       </div>
       <div class="actions-row">${renderStudentSelect(students)}</div>
     </div>
@@ -603,13 +603,13 @@ function renderPei() {
       <div class="panel-title">
         <div>
           <h2>Plano Educacional Individualizado</h2>
-          <p>Preencha o componente e o conteúdo. O botão tenta gerar com MariTalk no Vercel e usa simulação quando a API não estiver configurada.</p>
+          <p>Informe o componente e os conteúdos, gere uma primeira versão e revise todos os campos antes de salvar.</p>
         </div>
         <span class="mini-tag gold">Campos 07, 09, 10 e 11</span>
       </div>
       <div class="model-box">
-        <strong>Modelo MariTalk no protótipo:</strong>
-        gera objetivos específicos, metodologia, avaliação e resultados esperados considerando necessidades, habilidades, dificuldades, adaptações e conteúdos programáticos. Não envie dados reais nesta versão pública.
+        <strong>Apoio à elaboração:</strong>
+        a sugestão considera necessidades, habilidades, dificuldades, adaptações e conteúdos programáticos. A revisão e a decisão final permanecem com o profissional responsável.
       </div>
       <form class="data-form" id="pei-form">
         <div class="field-grid">
@@ -622,11 +622,11 @@ function renderPei() {
           <label>(11) Resultados esperados<textarea name="results">${escapeHtml(latest.results || "")}</textarea></label>
         </div>
         <div class="split-actions">
-          <button class="button button-secondary" type="button" data-generate-pei>Gerar com MariTalk</button>
+          <button class="button button-secondary" type="button" data-generate-pei>Gerar sugestão</button>
           <button class="button button-primary" type="submit">Salvar PEI</button>
           <button class="button button-ghost" type="button" data-export-pei>Exportar texto</button>
         </div>
-        <p class="generation-status" data-pei-status aria-live="polite">Ao gerar, este aviso confirma se a resposta veio do MariTalk ou da simulacao local.</p>
+        <p class="generation-status" data-pei-status aria-live="polite">A geração pode usar o serviço de IA configurado ou o modo demonstrativo local.</p>
       </form>
     </section>
     ${renderPeiHistory(state.selectedStudentId)}
@@ -641,7 +641,7 @@ function renderPeiHistory(studentId) {
       <div class="panel-title">
         <div>
           <h2>Histórico de PEIs</h2>
-          <p>Registros salvos para este estudante no protótipo.</p>
+          <p>Registros salvos para este estudante.</p>
         </div>
       </div>
       <div class="grid two">
@@ -692,7 +692,7 @@ function renderActivities() {
       <div>
         <p class="section-kicker">Professor</p>
         <h1>Atividades adaptadas.</h1>
-        <p>O gerador lê as informações do aluno e simula atividades prontas para aplicar, com apoios e evidências de avaliação.</p>
+        <p>Transforme objetivos e conteúdos em propostas adaptadas, com apoios e evidências para acompanhamento.</p>
       </div>
       <div class="actions-row">${renderStudentSelect(students)}</div>
     </div>
@@ -710,7 +710,7 @@ function renderActivities() {
       <div class="panel-title">
         <div>
           <h2>Gerador de atividades</h2>
-          <p>Tenta usar MariTalk/Sabia-3 para o bloco 12 e mantém fallback simulado para demonstração.</p>
+          <p>Gere uma sequência inicial, revise as adaptações e salve a versão adequada para o estudante.</p>
         </div>
         <span class="mini-tag blue">Bloco 12</span>
       </div>
@@ -723,11 +723,11 @@ function renderActivities() {
           <label class="wide">(12) Sugestões de atividades<textarea class="generated-output" name="output">${escapeHtml(latest.output || "")}</textarea></label>
         </div>
         <div class="split-actions">
-          <button class="button button-secondary" type="button" data-generate-activities>Gerar com MariTalk</button>
+          <button class="button button-secondary" type="button" data-generate-activities>Gerar sugestões</button>
           <button class="button button-primary" type="submit">Salvar atividades</button>
           <button class="button button-ghost" type="button" data-export-activities>Exportar texto</button>
         </div>
-        <p class="generation-status" data-activities-status aria-live="polite">Ao gerar, este aviso confirma se a resposta veio do MariTalk ou da simulacao local.</p>
+        <p class="generation-status" data-activities-status aria-live="polite">A geração pode usar o serviço de IA configurado ou o modo demonstrativo local.</p>
       </form>
     </section>
     ${renderActivityHistory(state.selectedStudentId)}
@@ -1055,7 +1055,7 @@ function bindViewEvents() {
       const fallback = generatePei(student, values.subject, values.contents);
       let generated = fallback;
       setButtonBusy(generateButton, true, "Gerando...");
-      setGenerationStatus("[data-pei-status]", "Tentando gerar com MariTalk/Sabia-3...", "");
+      setGenerationStatus("[data-pei-status]", "Preparando uma sugestão de PEI...", "");
 
       try {
         const response = await requestMaritalk("pei", {
@@ -1065,12 +1065,12 @@ function bindViewEvents() {
           contents: values.contents
         });
         generated = parsePeiResponse(response, fallback);
-        setGenerationStatus("[data-pei-status]", "Gerado com o modelo Sabiázinho-4. A API foi usada neste clique.", "success");
+        setGenerationStatus("[data-pei-status]", "Sugestão gerada com o serviço de IA configurado. Revise antes de salvar.", "success");
       } catch (error) {
         generated = fallback;
         setGenerationStatus(
           "[data-pei-status]",
-          `Nao foi possivel usar MariTalk agora. O prototipo preencheu uma simulacao local. Motivo: ${error.message}`,
+          `O serviço de IA não respondeu. Uma sugestão demonstrativa local foi preenchida para você continuar. Motivo: ${error.message}`,
           "warning"
         );
       } finally {
@@ -1118,7 +1118,7 @@ function bindViewEvents() {
       const fallback = generateActivities(student, values.subject, values.focus, values.contents);
       let output = fallback;
       setButtonBusy(generateButton, true, "Gerando...");
-      setGenerationStatus("[data-activities-status]", "Tentando gerar com MariTalk/Sabia-3...", "");
+      setGenerationStatus("[data-activities-status]", "Preparando sugestões de atividades...", "");
 
       try {
         const response = await requestMaritalk("activities", {
@@ -1129,12 +1129,12 @@ function bindViewEvents() {
           contents: values.contents
         });
         output = normalizeActivitiesResponse(response, fallback);
-        setGenerationStatus("[data-activities-status]", "Gerado com MariTalk/Sabia-3. A API foi usada neste clique.", "success");
+        setGenerationStatus("[data-activities-status]", "Sugestões geradas com o serviço de IA configurado. Revise antes de salvar.", "success");
       } catch (error) {
         output = fallback;
         setGenerationStatus(
           "[data-activities-status]",
-          `Nao foi possivel usar MariTalk agora. O prototipo preencheu uma simulacao local. Motivo: ${error.message}`,
+          `O serviço de IA não respondeu. Sugestões demonstrativas locais foram preenchidas para você continuar. Motivo: ${error.message}`,
           "warning"
         );
       } finally {
@@ -1228,14 +1228,6 @@ ${values.output}
 function bindGlobalEvents() {
   $$("[data-role-option]").forEach((button) => {
     button.addEventListener("click", () => setRoleChoice(button.dataset.roleOption));
-  });
-
-  $$("[data-demo-login]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const role = button.dataset.demoLogin;
-      setRoleChoice(role);
-      login(role, role === "admin" ? "administrador" : "professor", "123456");
-    });
   });
 
   $("#login-form").addEventListener("submit", (event) => {
